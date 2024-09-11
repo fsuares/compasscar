@@ -51,11 +51,18 @@ const addCar = async (car) => {
     });
 
     return car;
-}
+};
 
+const deleteCar = async (id) => {
+    const qrr_deleteCarItems = `DELETE FROM cars_items WHERE car_id = ?;`
+    const qrr_deleteCar = `DELETE FROM cars WHERE id = ?;`
+    const deleteCarItems = await connection.execute(qrr_deleteCarItems, [id]);
+    const deleteCar = await connection.execute(qrr_deleteCar, [id]);
+}
 
 module.exports = {
     getCars,
     getCarsByID,
-    addCar
+    addCar,
+    deleteCar
 };
