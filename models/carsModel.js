@@ -39,7 +39,23 @@ const getCarsByID = async (id) => {
     return car;
 };
 
+const addCar = async (car) => {
+    const { brand, model, year, items } = car;
+    const querry_car = `INSERT INTO cars (brand, model, year)
+                    VALUES ( ? , ? , ? );`
+    const querry_items = `INSERT INTO cars_items (name, car_id)
+                    VALUES ( ? , ? );`
+    const createdCar = await connection.execute(querry_car, [brand, model, year]);
+    items.forEach(item => {
+        const createdItems = connection.execute(querry_items, [item, createdCar[0].insertId]);
+    });
+
+    return car;
+}
+
+
 module.exports = {
     getCars,
-    getCarsByID
+    getCarsByID,
+    addCar
 };
