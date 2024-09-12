@@ -1,5 +1,6 @@
 const connection = require('../database/connection');
 
+// Model to get cars
 const getCars = async (params) => {
     let { page, limit, brand, model, year } = params;
     if (!page) page = 1;
@@ -28,6 +29,7 @@ const getCars = async (params) => {
     return { "count": cars.length, "pages": pages, "data": cars_limited };
 };
 
+// Model to get cars by ID
 const getCarsByID = async (params) => {
     const { id } = params;
     const query = `SELECT
@@ -49,6 +51,7 @@ const getCarsByID = async (params) => {
     return car;
 };
 
+// Model to add a car
 const addCar = async (car) => {
     const { brand, model, year } = car;
     const items = [...new Set(car.items)];
@@ -64,6 +67,7 @@ const addCar = async (car) => {
     return createdCar[0].insertId;
 };
 
+// Model to delete a car
 const deleteCar = async (id) => {
     const qrr_deleteCarItems = `DELETE FROM cars_items WHERE car_id = ?;`;
     const qrr_deleteCar = `DELETE FROM cars WHERE id = ?;`;
@@ -71,6 +75,7 @@ const deleteCar = async (id) => {
     const deleteCar = await connection.execute(qrr_deleteCar, [id]);
 };
 
+// Model to update a car
 const updateCar = async (id, car) => {
     const { brand, model, year, items } = car;
     const params = [];

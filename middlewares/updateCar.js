@@ -1,3 +1,4 @@
+// This file contains the middleware function to validate the year of the car.
 const validateYear = (req, res, next) => {
 	const currentYear = new Date().getFullYear() + 1;
 	const limitYear = currentYear - 10;

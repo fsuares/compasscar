@@ -1,6 +1,7 @@
-
+// Description: Middlewares for addCar route
 const connection = require('../database/connection');
 
+// Middleware to validate if brand field exists
 const validateBrandField = (req, res, next) => {
     const { body } = req;
     if (!body.brand) {
@@ -8,6 +9,7 @@ const validateBrandField = (req, res, next) => {
     } else next();
 };
 
+// Middleware to validate if model field exists
 const validateModelField = (req, res, next) => {
     const { body } = req;
     if (!body.model) {
@@ -15,6 +17,7 @@ const validateModelField = (req, res, next) => {
     } else next();
 };
 
+// Middleware to validate if year field exists
 const validateYearField = (req, res, next) => {
     const currentYear = new Date().getFullYear() + 1;
     const { body } = req;
@@ -26,6 +29,7 @@ const validateYearField = (req, res, next) => {
     } else next();
 };
 
+// Middleware to validate if items field exists
 const validateItemsField = (req, res, next) => {
     const { body } = req;
     if (!body.items) {
@@ -33,6 +37,7 @@ const validateItemsField = (req, res, next) => {
     } else next();
 };
 
+// Middleware to validate if a car exists by brand, model and year.
 const validateIfExists = async (req, res, next) => {
     const { body } = req;
     const querry = `SELECT EXISTS (SELECT 1 FROM cars WHERE brand = ? AND model = ? AND year = ?) AS carExists;`
@@ -41,8 +46,6 @@ const validateIfExists = async (req, res, next) => {
         return res.status(409).json({ message: 'car there is already a car with this data' });
     } else next();
 };
-
-
 
 module.exports = {
     validateBrandField,

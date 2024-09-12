@@ -1,3 +1,4 @@
+// Entry point of the application
 const dotenv = require('dotenv').config()
 const express = require('express');
 const router = require('../routes/router');

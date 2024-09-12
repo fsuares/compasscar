@@ -1,4 +1,4 @@
-
+// Middleware to validate if a car exists by id.
 const connection = require('../database/connection');
 
 const validateIfExists = async (req, res, next) => {

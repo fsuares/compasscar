@@ -1,5 +1,6 @@
 const carsModel = require('../models/carsModel');
 
+// Function to get all cars
 const getCars = async (req, res) => {
     try {
         const cars = await carsModel.getCars(req.query);
@@ -9,6 +10,7 @@ const getCars = async (req, res) => {
     };
 };
 
+// Function to get cars by ID
 const getCarsByID = async (req, res) => {
     try {
         const cars = await carsModel.getCarsByID(req.params);
@@ -18,6 +20,7 @@ const getCarsByID = async (req, res) => {
     };
 };
 
+// Function to add a car
 const addCar = async (req, res) => {
     try {
         const car = await carsModel.addCar(req.body);
@@ -27,6 +30,7 @@ const addCar = async (req, res) => {
     };
 };
 
+// Function to delete a car
 const deleteCar = async (req, res) => {
     try {
         const car = await carsModel.deleteCar(req.params.id);
@@ -36,6 +40,7 @@ const deleteCar = async (req, res) => {
     };
 };
 
+// Function to update a car
 const updateCar = async (req, res) => {
     try {
         const car = await carsModel.updateCar(req.params.id, req.body);
