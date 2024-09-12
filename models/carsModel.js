@@ -73,19 +73,35 @@ const deleteCar = async (id) => {
 
 const updateCar = async (id, car) => {
     const { brand, model, year, items } = car;
-    const querry_car = `UPDATE cars
-                        SET brand = ?,
-                            model = ?,
-                            year = ?
-                        WHERE id = ?;`
-    const querry_delete_items = `DELETE FROM cars_items WHERE car_id = ?;`
-    const querry_items = `INSERT INTO cars_items (name, car_id)
-                    VALUES ( ? , ? );`
-    const updatedCar = await connection.execute(querry_car, [brand, model, year, id]);
-    const removeItems = await connection.execute(querry_delete_items, [id]);
-    items.forEach(item => {
-        const createdItems = connection.execute(querry_items, [item, id]);
-    });
+    const params = [];
+    if (brand) params.push(brand);
+    if (model) params.push(model);
+    if (year) params.push(year);
+    params.push(id);
+
+    if (brand || model || year) {
+        let querry_car = `UPDATE cars
+                            SET
+                            ${brand ? 'brand = ?, ' : ''}
+                            ${model ? 'model = ?, ' : ''}
+                            ${year ? 'year = ?, ' : ''}`;
+
+        querry_car = querry_car.trim().slice(0, -1);
+        querry_car += ` WHERE id = ?;`
+
+        const updatedCar = await connection.execute(querry_car, params);
+    };
+
+    if (items) {
+        const dedup_items = [...new Set(items)];
+        const querry_delete_items = `DELETE FROM cars_items WHERE car_id = ?;`
+        const querry_items = `INSERT INTO cars_items (name, car_id)
+                        VALUES ( ? , ? );`;
+        const removeItems = await connection.execute(querry_delete_items, [id]);
+        dedup_items.forEach(item => {
+            const createdItems = connection.execute(querry_items, [item, id]);
+        });
+    };
 
     return car;
 };
