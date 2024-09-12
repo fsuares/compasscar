@@ -58,11 +58,31 @@ const deleteCar = async (id) => {
     const qrr_deleteCar = `DELETE FROM cars WHERE id = ?;`
     const deleteCarItems = await connection.execute(qrr_deleteCarItems, [id]);
     const deleteCar = await connection.execute(qrr_deleteCar, [id]);
-}
+};
+
+const updateCar = async (id, car) => {
+    const { brand, model, year, items } = car;
+    const querry_car = `UPDATE cars
+                        SET brand = ?,
+                            model = ?,
+                            year = ?
+                        WHERE id = ?;`
+    const querry_delete_items = `DELETE FROM cars_items WHERE car_id = ?;`
+    const querry_items = `INSERT INTO cars_items (name, car_id)
+                    VALUES ( ? , ? );`
+    const updatedCar = await connection.execute(querry_car, [brand, model, year, id]);
+    const removeItems = await connection.execute(querry_delete_items, [id]);
+    items.forEach(item => {
+        const createdItems = connection.execute(querry_items, [item, id]);
+    });
+
+    return car;
+};
 
 module.exports = {
     getCars,
     getCarsByID,
     addCar,
-    deleteCar
+    deleteCar,
+    updateCar
 };

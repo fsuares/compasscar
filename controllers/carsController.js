@@ -36,9 +36,19 @@ const deleteCar = async (req, res) => {
     }
 };
 
+const updateCar = async (req, res) => {
+    try {
+        const car = await carsModel.updateCar(req.params.id, req.body);
+        return res.status(200).json(car);
+    } catch (error) {
+        return res.status(500).json(`500: internal server error`);
+    }
+};
+
 module.exports = {
     getCars,
     getCarsByID,
     addCar,
-    deleteCar
+    deleteCar,
+    updateCar
 };
