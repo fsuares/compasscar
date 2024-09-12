@@ -1,22 +1,31 @@
 const connection = require('../database/connection');
 
-const getCars = async () => {
-    const querry = `SELECT
-                        cars.id,
-                        cars.brand,
-                        cars.model,
-                        cars.year,
-                        JSON_ARRAYAGG(cars_items.name) AS items
-                    FROM
-                        cars
-                    LEFT JOIN
-                        cars_items ON cars.id = cars_items.car_id
-                    GROUP BY
-                        cars.id, cars.brand, cars.model, cars.year
-                    ORDER BY
-                        cars.id;`
+const getCars = async (params) => {
+    let { page, limit, brand, model, year } = params;
+    if (!page) page = 1;
+    if (!limit || limit < 1) limit = 5;
+
+    const startIndex = (page - 1) * limit;
+    const endIndex = page * limit;
+    const querry = `SELECT * FROM cars`
+
+    if (brand || model || year) {
+        querry += ` WHERE `
+        if (brand) {
+            querry += `brand = '${brand}'`
+        }
+        if (model) {
+            querry += `model = '${model}'`
+        }
+        if (year) {
+            querry += `year = '${year}'`
+        };
+    };
+
     const [cars] = await connection.execute(querry);
-    return cars;
+    const pages = Math.ceil(cars.length / limit);
+    const cars_limited = cars.slice(startIndex, endIndex);
+    return { "count": cars.length, "pages": pages, "data": cars_limited };
 };
 
 const getCarsByID = async (params) => {

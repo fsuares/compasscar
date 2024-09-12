@@ -1,11 +1,11 @@
 const carsModel = require('../models/carsModel');
 
-const getCars = async (_req, res) => {
+const getCars = async (req, res) => {
     try {
-        const cars = await carsModel.getCars();
+        const cars = await carsModel.getCars(req.query);
         return res.status(200).json(cars);
     } catch (error) {
-        console.error(error.name);
+        return res.status(500).json(`500: internal server error`);
     };
 };
 
