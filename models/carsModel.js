@@ -19,7 +19,8 @@ const getCars = async () => {
     return cars;
 };
 
-const getCarsByID = async (id) => {
+const getCarsByID = async (params) => {
+    const { id } = params;
     const querry = `SELECT
                         cars.id,
                         cars.brand,
