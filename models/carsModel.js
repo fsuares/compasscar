@@ -50,7 +50,7 @@ const addCar = async (car) => {
         const createdItems = connection.execute(querry_items, [item, createdCar[0].insertId]);
     });
 
-    return car;
+    return createdCar[0].insertId;
 };
 
 const deleteCar = async (id) => {

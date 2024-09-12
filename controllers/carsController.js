@@ -21,7 +21,7 @@ const getCarsByID = async (req, res) => {
 const addCar = async (req, res) => {
     try {
         const car = await carsModel.addCar(req.body);
-        return res.status(200).json(car);
+        return res.status(201).json({ id: car });
     } catch (error) {
         return res.status(500).json(`500: internal server error`)
     }
