@@ -40,7 +40,8 @@ const getCarsByID = async (id) => {
 };
 
 const addCar = async (car) => {
-    const { brand, model, year, items } = car;
+    const { brand, model, year } = car;
+    const items = [...new Set(car.items)];
     const querry_car = `INSERT INTO cars (brand, model, year)
                     VALUES ( ? , ? , ? );`
     const querry_items = `INSERT INTO cars_items (name, car_id)
