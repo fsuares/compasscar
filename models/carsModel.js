@@ -7,16 +7,16 @@ const getCars = async (params) => {
 
     const startIndex = (page - 1) * limit;
     const endIndex = page * limit;
-    const query = `SELECT * FROM cars`
+    const query = `SELECT * FROM cars`;
 
     if (brand || model || year) {
         query += ` WHERE `
         if (brand) {
             query += `brand = '${brand}'`
-        }
+        };
         if (model) {
             query += `model = '${model}'`
-        }
+        };
         if (year) {
             query += `year = '${year}'`
         };
@@ -44,7 +44,7 @@ const getCarsByID = async (params) => {
                     GROUP BY
                         cars.id, cars.brand, cars.model, cars.year
                     ORDER BY
-                        cars.id;`
+                        cars.id;`;
     const [car] = await connection.execute(query, [id]);
     return car;
 };
@@ -53,9 +53,9 @@ const addCar = async (car) => {
     const { brand, model, year } = car;
     const items = [...new Set(car.items)];
     const query_car = `INSERT INTO cars (brand, model, year)
-                    VALUES ( ? , ? , ? );`
+                    VALUES ( ? , ? , ? );`;
     const query_items = `INSERT INTO cars_items (name, car_id)
-                    VALUES ( ? , ? );`
+                    VALUES ( ? , ? );`;
     const createdCar = await connection.execute(query_car, [brand, model, year]);
     items.forEach(item => {
         const createdItems = connection.execute(query_items, [item, createdCar[0].insertId]);
@@ -65,8 +65,8 @@ const addCar = async (car) => {
 };
 
 const deleteCar = async (id) => {
-    const qrr_deleteCarItems = `DELETE FROM cars_items WHERE car_id = ?;`
-    const qrr_deleteCar = `DELETE FROM cars WHERE id = ?;`
+    const qrr_deleteCarItems = `DELETE FROM cars_items WHERE car_id = ?;`;
+    const qrr_deleteCar = `DELETE FROM cars WHERE id = ?;`;
     const deleteCarItems = await connection.execute(qrr_deleteCarItems, [id]);
     const deleteCar = await connection.execute(qrr_deleteCar, [id]);
 };
@@ -87,7 +87,7 @@ const updateCar = async (id, car) => {
                             ${year ? 'year = ?, ' : ''}`;
 
         query_car = query_car.trim().slice(0, -1);
-        query_car += ` WHERE id = ?;`
+        query_car += ` WHERE id = ?;`;
 
         const updatedCar = await connection.execute(query_car, params);
     };

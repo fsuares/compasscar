@@ -5,19 +5,33 @@ const addCarMid = require('../middlewares/addCar');
 const existsById = require('../middlewares/existsByIdParam');
 const updateCar = require('../middlewares/updateCar');
 
-router.get('/api/v1/cars', carsController.getCars);
-router.get('/api/v1/cars/:id', existsById.validateIfExists, carsController.getCarsByID);
 router.post('/api/v1/cars',
     addCarMid.validateBrandField,
     addCarMid.validateModelField,
     addCarMid.validateYearField,
     addCarMid.validateItemsField,
     addCarMid.validateIfExists,
-    carsController.addCar);
-router.delete('/api/v1/cars/:id', existsById.validateIfExists, carsController.deleteCar);
+    carsController.addCar
+);
+
 router.patch('/api/v1/cars/:id',
     existsById.validateIfExists,
     updateCar.validateYear,
-    carsController.updateCar);
+    carsController.updateCar
+);
+
+router.get('/api/v1/cars',
+    carsController.getCars
+);
+
+router.get('/api/v1/cars/:id',
+    existsById.validateIfExists,
+    carsController.getCarsByID
+);
+
+router.delete('/api/v1/cars/:id',
+    existsById.validateIfExists,
+    carsController.deleteCar
+);
 
 module.exports = router;

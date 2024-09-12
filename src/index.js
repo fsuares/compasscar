@@ -8,5 +8,5 @@ const port = process.env.PORT;
 app.use(express.json());
 app.use(router);
 
-app.listen(port, () => console.log(`Running on port ${port}`));
+app.listen(port, () => console.log(`server listening on port ${port}`));
 

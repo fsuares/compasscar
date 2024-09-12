@@ -24,7 +24,7 @@ const addCar = async (req, res) => {
         return res.status(201).json({ id: car });
     } catch (error) {
         return res.status(500).json(`500: internal server error`)
-    }
+    };
 };
 
 const deleteCar = async (req, res) => {
@@ -33,7 +33,7 @@ const deleteCar = async (req, res) => {
         return res.status(204).json(`204: no content`);
     } catch (error) {
         return res.status(500).json(`500: internal server error`);
-    }
+    };
 };
 
 const updateCar = async (req, res) => {
@@ -42,7 +42,7 @@ const updateCar = async (req, res) => {
         return res.status(200).json(car);
     } catch (error) {
         return res.status(500).json(`500: internal server error`);
-    }
+    };
 };
 
 module.exports = {
