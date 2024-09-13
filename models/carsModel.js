@@ -8,7 +8,7 @@ const getCars = async (params) => {
 
     const startIndex = (page - 1) * limit;
     const endIndex = page * limit;
-    const query = `SELECT * FROM cars`;
+    let query = `SELECT * FROM cars`;
 
     if (brand || model || year) {
         query += ` WHERE `
