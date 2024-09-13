@@ -43,7 +43,7 @@ const validateIfExists = async (req, res, next) => {
     const querry = `SELECT EXISTS (SELECT 1 FROM cars WHERE brand = ? AND model = ? AND year = ?) AS carExists;`
     const carExists = await connection.execute(querry, [body.brand, body.model, body.year]);
     if (carExists[0][0].carExists == 1) {
-        return res.status(409).json({ message: 'car there is already a car with this data' });
+        return res.status(409).json({ message: 'there is already a car with this data' });
     } else next();
 };
 
