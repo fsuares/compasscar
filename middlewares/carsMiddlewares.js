@@ -5,7 +5,7 @@ const connection = require('../database/connection');
 const validateBrandField = (req, res, next) => {
     const { body } = req;
     if (!body.brand) {
-        return res.status(400).json({ message: 'brand is required' });
+        return res.status(400).json({ message: 'brand is required and not empty' });
     } else next();
 };
 
@@ -13,7 +13,7 @@ const validateBrandField = (req, res, next) => {
 const validateModelField = (req, res, next) => {
     const { body } = req;
     if (!body.model) {
-        return res.status(400).json({ message: 'model is required' });
+        return res.status(400).json({ message: 'model is required and not empty' });
     } else next();
 };
 
@@ -23,7 +23,7 @@ const validateYearField = (req, res, next) => {
     const limitYear = currentYear - 10;
     const { body } = req;
     if (!body.year) {
-        return res.status(400).json({ message: 'year is required' });
+        return res.status(400).json({ message: 'year is required and not empty' });
     };
     if (body.year < (currentYear - 10)) {
         res.status(400).json({ message: `year should be between ${limitYear} and ${currentYear}` });
@@ -34,7 +34,7 @@ const validateYearField = (req, res, next) => {
 const validateItemsField = (req, res, next) => {
     const { body } = req;
     if (!body.items) {
-        return res.status(400).json({ message: 'items is required' });
+        return res.status(400).json({ message: 'items is required and not empty' });
     } else next();
 };
 
