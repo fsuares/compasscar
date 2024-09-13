@@ -3,6 +3,7 @@ const router = express.Router();
 const carsController = require('../controllers/carsController')
 const carValidations = require('../middlewares/carsMiddlewares');
 const existsById = require('../middlewares/existsByIdParam');
+const patch = require('../middlewares/updateCar');
 
 // Route to add a car
 router.post('/api/v1/cars',
@@ -17,10 +18,10 @@ router.post('/api/v1/cars',
 // Route to update a car
 router.patch('/api/v1/cars/:id',
     existsById.validateIfExists,
-    carValidations.validateBrandField,
-    carValidations.validateModelField,
-    carValidations.validateYearField,
-    carValidations.validateIfExists,
+    patch.emptyBrand,
+    patch.emptyModel,
+    patch.emptyYear,
+    patch.validateIfExists,
     carsController.updateCar
 );
 
