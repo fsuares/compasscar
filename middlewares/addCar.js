@@ -20,12 +20,13 @@ const validateModelField = (req, res, next) => {
 // Middleware to validate if year field exists
 const validateYearField = (req, res, next) => {
     const currentYear = new Date().getFullYear() + 1;
+    const limitYear = currentYear - 10;
     const { body } = req;
     if (!body.year) {
         return res.status(400).json({ message: 'year is required' });
     };
     if (body.year < (currentYear - 10)) {
-        res.status(400).json({ message: 'year should be between 2015 and 2025' });
+        res.status(400).json({ message: `year should be between ${limitYear} and ${currentYear}` });
     } else next();
 };
 
