@@ -1,24 +1,26 @@
 const express = require('express');
 const router = express.Router();
 const carsController = require('../controllers/carsController')
-const addCarMid = require('../middlewares/addCar');
+const carValidations = require('../middlewares/carsMiddlewares');
 const existsById = require('../middlewares/existsByIdParam');
-const updateCar = require('../middlewares/updateCar');
 
 // Route to add a car
 router.post('/api/v1/cars',
-    addCarMid.validateBrandField,
-    addCarMid.validateModelField,
-    addCarMid.validateYearField,
-    addCarMid.validateItemsField,
-    addCarMid.validateIfExists,
+    carValidations.validateBrandField,
+    carValidations.validateModelField,
+    carValidations.validateYearField,
+    carValidations.validateItemsField,
+    carValidations.validateIfExists,
     carsController.addCar
 );
 
 // Route to update a car
 router.patch('/api/v1/cars/:id',
     existsById.validateIfExists,
-    updateCar.validateYear,
+    carValidations.validateBrandField,
+    carValidations.validateModelField,
+    carValidations.validateYearField,
+    carValidations.validateIfExists,
     carsController.updateCar
 );
 
