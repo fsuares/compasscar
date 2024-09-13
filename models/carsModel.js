@@ -61,7 +61,9 @@ const addCar = async (car) => {
                     VALUES ( ? , ? );`;
     const createdCar = await connection.execute(query_car, [brand, model, year]);
     items.forEach(item => {
-        const createdItems = connection.execute(query_items, [item, createdCar[0].insertId]);
+        if (item) {
+            const createdItems = connection.execute(query_items, [item, createdCar[0].insertId]);
+        };
     });
 
     return createdCar[0].insertId;
@@ -104,7 +106,9 @@ const updateCar = async (id, car) => {
                         VALUES ( ? , ? );`;
         const removeItems = await connection.execute(query_delete_items, [id]);
         dedup_items.forEach(item => {
-            const createdItems = connection.execute(query_items, [item, id]);
+            if (item) {
+                const createdItems = connection.execute(query_items, [item, id]);
+            };
         });
     };
 
