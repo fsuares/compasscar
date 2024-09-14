@@ -1,9 +1,13 @@
 const express = require('express');
 const router = express.Router();
+const swaggerSpec = require('../docs/swagger');
+const swaggerUi = require('swagger-ui-express');
 const carsController = require('../controllers/carsController')
 const carValidations = require('../middlewares/carsMiddlewares');
 const existsById = require('../middlewares/existsByIdParam');
 const patch = require('../middlewares/updateCar');
+
+router.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // Route to add a car
 router.post('/api/v1/cars',
