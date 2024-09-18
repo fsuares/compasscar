@@ -98,7 +98,7 @@ CREATE TABLE cars_items(
 	name VARCHAR(100),
 	car_id INT,
 	PRIMARY KEY (id),
-	FOREIGN KEY (car_id) REFERENCES car.id
+	FOREIGN KEY (car_id) REFERENCES cars.id
 );
 ```
 #### 3. Clone the project repository: 
