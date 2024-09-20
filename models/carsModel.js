@@ -13,14 +13,15 @@ const getCars = async (params) => {
     if (brand || model || year) {
         query += ` WHERE `
         if (brand) {
-            query += `brand = '${brand}'`
+            query += `brand = '${brand}' AND `
         };
         if (model) {
-            query += `model = '${model}'`
+            query += `model = '${model}' AND `
         };
         if (year) {
-            query += `year = '${year}'`
+            query += `year = '${year}' AND `
         };
+        query = query.trim().slice(0, -3);
     };
 
     const [cars] = await connection.execute(query);
