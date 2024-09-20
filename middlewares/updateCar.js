@@ -3,7 +3,7 @@ const connection = require('../database/connection');
 const emptyBrand = (req, res, next) => {
 	const { body } = req;
 	if (!body.brand) next();
-	if (body.brand.trim() === '') {
+	else if (body.brand.trim() === '') {
 		return res.status(400).json({ message: 'brand must to be not empty' });
 	} else next();
 
@@ -12,7 +12,7 @@ const emptyBrand = (req, res, next) => {
 const emptyModel = (req, res, next) => {
 	const { body } = req;
 	if (!body.model) next();
-	if (body.model.trim() === '') {
+	else if (body.model.trim() === '') {
 		return res.status(400).json({ message: 'model must to be not empty' });
 	} else next();
 
@@ -21,7 +21,7 @@ const emptyModel = (req, res, next) => {
 const emptyYear = (req, res, next) => {
 	const { body } = req;
 	if (!body.year) next();
-	if (body.year.toString().trim() === '') {
+	else if (body.year.toString().trim() === '') {
 		return res.status(400).json({ message: 'year must to be not empty' });
 	} else next();
 };
