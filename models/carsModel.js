@@ -3,8 +3,9 @@ const connection = require('../database/connection');
 // Model to get cars
 const getCars = async (params) => {
     let { page, limit, brand, model, year } = params;
-    if (!page) page = 1;
+    if (!page || page < 1) page = 1;
     if (!limit || limit < 1) limit = 5;
+    if (limit > 10) limit = 10;
 
     const startIndex = (page - 1) * limit;
     const endIndex = page * limit;
